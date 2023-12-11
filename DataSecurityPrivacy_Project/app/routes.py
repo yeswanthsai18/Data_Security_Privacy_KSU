@@ -101,9 +101,12 @@ def insert_data():
         if row['Gender'] not in ['Male', 'Female']:
             row['Gender'] = 'Male'  # or 'Female' based on your choice for non-standard values
 
+# encrypting the data in database
         age_encrypted = data_encryption(row['age'])
         gender_encrypted = data_encryption(row['gender'])
         health_history_encrypted = data_encryption(row['health_history'])
+
+
 
         new_record = HealthRecord(
             First_name=row['First_name'],
