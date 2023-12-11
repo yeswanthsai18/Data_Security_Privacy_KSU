@@ -18,9 +18,9 @@ principal = Principal()
 admin_permission = Permission('admin')
 readonly_permission = Permission('readonly')
 
+
+
 from .models import User
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -40,7 +40,6 @@ def create_app():
     # Register blueprints or other configurations
     from .routes import bp as main_bp  # Import route definitions
     app.register_blueprint(main_bp)
-
     return app
 
 
@@ -75,6 +74,7 @@ def get_data_for_group_H():
     return data
 
 
+
 def get_data_for_group_R():
     # Fetch health records excluding First_name and Last_name
     records = HealthRecord.query.all()
@@ -105,7 +105,6 @@ def insert_data():
         age_encrypted = data_encryption(row['age'])
         gender_encrypted = data_encryption(row['gender'])
         health_history_encrypted = data_encryption(row['health_history'])
-
 
 
         new_record = HealthRecord(
@@ -162,6 +161,7 @@ def login():
             return render_template('login.html', message='Invalid username or password')
 
     return render_template('login.html')
+
 
 
 @bp.route('/dashboard')
