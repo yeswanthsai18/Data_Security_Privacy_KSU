@@ -101,18 +101,18 @@ def insert_data():
         if row['Gender'] not in ['Male', 'Female']:
             row['Gender'] = 'Male'  # or 'Female' based on your choice for non-standard values
 
-        # age_encrypted = data_encryption(row['age'])
-        # Gender_encrypted = data_encryption(row['Gender'])
-        # health_history_encrypted = data_encryption(row['health_history'])
+        age_encrypted = data_encryption(row['age'])
+        gender_encrypted = data_encryption(row['gender'])
+        health_history_encrypted = data_encryption(row['health_history'])
 
         new_record = HealthRecord(
             First_name=row['First_name'],
             Last_name=row['Last_name'],
-            age=row['age'],
-            Gender=row['Gender'],
+            age=row['age_encrypted'],
+            Gender=row['gender_encrypted'],
             weight=row['weight'],
             height=row['height'],
-            health_history=row['health_history']
+            health_history=row['health_history_encrypted']
         )
         db.session.add(new_record)
 
@@ -159,19 +159,6 @@ def login():
             return render_template('login.html', message='Invalid username or password')
 
     return render_template('login.html')
-
-
-# @bp.route('/home')
-# def home():
-#     if 'username' in session:
-#         user = User.query.filter_by(username=session['username'], group='H').first()
-#         if user:
-#             health_data = get_data_for_group_H()
-#             return render_template('home.html', username=session['username'], health_data=health_data)
-#         else:
-#             return redirect(url_for('main.login'))
-#     else:
-#         return redirect(url_for('main.login'))
 
 
 @bp.route('/dashboard')

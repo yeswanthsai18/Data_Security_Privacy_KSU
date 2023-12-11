@@ -38,6 +38,8 @@ class HealthRecord(db.Model):
     height = db.Column(db.Float)
     health_history = db.Column(db.String(100))
 
+
+
 # Model for User table
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
