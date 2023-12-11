@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 15px;
+            text-decoration: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-blue {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-red {
+            background-color: red;
+            color: #fff;
+        }
+
+        .btn:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e2f1ff;
+        }
+
+        p {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the SYT Health Data</h1>
+    <button class="btn btn-red" onclick="window.location='{{ url_for('main.logout') }}'">Logout</button>
+    <div class="container">
+        {% if current_user.group == 'H' %}
+            <div style="color: blue">
+                <h2>Do you want to add a new patient?</h2>
+                <button class="btn btn-blue" onclick="window.location='{{ url_for('main.add_patient') }}'">Add New Patient</button>
+            </div>
+            <h2>SYT Health Database</h2>
+            <!-- Display table for Group H -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Health History</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in health_data %}
+                        <tr>
+                            <td>{{ record.First_name }}</td>
+                            <td>{{ record.Last_name }}</td>
+                            <td>{{ record.age }}</td>
+                            <td>{{ record.Gender }}</td>
+                            <td>{{ record.weight }}</td>
+                            <td>{{ record.height }}</td>
+                            <td>{{ record.health_history }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elif current_user.group == 'R' %}
+            <!-- Display table for Group R -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Health History</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in health_data %}
+                        <tr>
+                            <td>{{ record.age }}</td>
+                            <td>{{ record.Gender }}</td>
+                            <td>{{ record.weight }}</td>
+                            <td>{{ record.height }}</td>
+                            <td>{{ record.health_history }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Invalid user group.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
